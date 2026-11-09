@@ -16,6 +16,11 @@ BEGIN
 END;
 $$ LANGUAGE plpgsql;
 
+-- Audit triggers on critical tables
 CREATE TRIGGER trg_audit_students
 AFTER INSERT OR UPDATE OR DELETE ON students
+FOR EACH ROW EXECUTE FUNCTION audit_changes();
+
+CREATE TRIGGER trg_audit_enrollments
+AFTER INSERT OR UPDATE OR DELETE ON enrollments
 FOR EACH ROW EXECUTE FUNCTION audit_changes();
